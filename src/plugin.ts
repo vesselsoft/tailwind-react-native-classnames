@@ -1,5 +1,5 @@
-import { TwConfig } from './tw-config';
-import { AddedUtilities, CreatePlugin, PluginFunction } from './types';
+import { TwConfig } from "./tw-config";
+import { AddedUtilities, CreatePlugin, PluginFunction } from "./types";
 
 const plugin: CreatePlugin = (handler) => {
   return { handler, config: undefined };
@@ -7,11 +7,13 @@ const plugin: CreatePlugin = (handler) => {
 
 export default plugin;
 
-export function getAddedUtilities(plugins: TwConfig['plugins']): AddedUtilities {
+export function getAddedUtilities(
+  plugins: TwConfig["plugins"]
+): AddedUtilities {
   return (
     plugins?.reduce<AddedUtilities>(
       (utils, plugin) => ({ ...utils, ...callPluginFunction(plugin.handler) }),
-      {},
+      {}
     ) ?? {}
   );
 }
@@ -22,6 +24,9 @@ function callPluginFunction(pluginFn: PluginFunction): AddedUtilities {
     addUtilities: (utilities) => {
       added = utilities;
     },
+    addVariant: (_variantName: string, _callback: () => void) => {
+      // TODO: do something with new variant
+    },
     ...core,
   });
   return added;
@@ -29,14 +34,13 @@ function callPluginFunction(pluginFn: PluginFunction): AddedUtilities {
 
 function notImplemented(fn: string): never {
   throw new Error(
-    `tailwindcss plugin function argument object prop "${fn}" not implemented`,
+    `tailwindcss plugin function argument object prop "${fn}" not implemented`
   );
 }
 
 const core = {
   addComponents: notImplemented,
   addBase: notImplemented,
-  addVariant: notImplemented,
   e: notImplemented,
   prefix: notImplemented,
   theme: notImplemented,
