@@ -138,6 +138,8 @@ export type AddedUtilities = Record<string, Style | string>;
 export type PluginFunction = (obj: {
   addUtilities(utilities: AddedUtilities): unknown;
 
+  addVariant: NotImplemented;
+
   /**
    * @deprecated not supported in @jaredh159/twrn
    */
@@ -147,11 +149,6 @@ export type PluginFunction = (obj: {
    * @deprecated not supported in @jaredh159/twrn
    */
   addBase: NotImplemented;
-
-  /**
-   * @deprecated not supported in @jaredh159/twrn
-   */
-  addVariant: NotImplemented;
 
   /**
    * @deprecated not supported in @jaredh159/twrn
