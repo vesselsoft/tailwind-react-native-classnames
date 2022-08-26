@@ -4,7 +4,7 @@
 
 ```jsx
 import { View, Text } from 'react-native';
-import tw from 'twrnc';
+import tw from '@vesselsoft/twrnc';
 
 const MyComponent = () => (
   <View style={tw`p-4 android:pt-2 bg-white dark:bg-black`}>
@@ -59,7 +59,7 @@ const MyComponent = () => (
 ## Installation
 
 ```bash
-npm install twrnc
+npm install @vesselsoft/twrnc
 ```
 
 ## API
@@ -69,13 +69,13 @@ most common use case -- passing a bunch of space-separated Tailwind classes and 
 back a react-native style object:
 
 ```js
-import tw from 'twrnc';
+import tw from '@vesselsoft/twrnc';
 
 tw`pt-6 bg-blue-100`;
 // -> { paddingTop: 24, backgroundColor: 'rgba(219, 234, 254, 1)' }
 ```
 
-In the spirit of Tailwindcss's intuitive responsive prefix syntax, `twrnc` adds support
+In the spirit of Tailwindcss's intuitive responsive prefix syntax, `@vesselsoft/twrnc` adds support
 for **platform prefixes** to conditionally apply styles based on the current platform:
 
 ```js
@@ -148,7 +148,7 @@ tw.color('blue-100'); // `bg|text|border-blue-100` also work
 You can import the main `tw` function and reach for `tw.style` only when you need it:
 
 ```jsx
-import tw from 'twrnc';
+import tw from '@vesselsoft/twrnc';
 
 const MyComponent = () => (
   <View style={tw`bg-blue-100`}>
@@ -161,7 +161,7 @@ const MyComponent = () => (
 `tw`:
 
 ```jsx
-import { style as tw } from 'twrnc';
+import { style as tw } from '@vesselsoft/twrnc';
 
 const MyComponent = () => (
   <View style={tw('bg-blue-100', invalid && 'text-red-500')}></View>
@@ -170,14 +170,14 @@ const MyComponent = () => (
 
 ## Customization
 
-You can use `twrnc` right out of the box if you haven't customized your
+You can use `@vesselsoft/twrnc` right out of the box if you haven't customized your
 `tailwind.config.js` file at all. But more likely you've got some important app-specific
 tailwind customizations you'd like to use. For that reason, we expose the ability to
 create a **custom configured version** of the `tw` function object.
 
 ```js
 // lib/tailwind.js
-import { create } from 'twrnc';
+import { create } from '@vesselsoft/twrnc';
 
 // create the customized version...
 const tw = create(require(`../../tailwind.config.js`)); // <- your path may differ
@@ -205,8 +205,8 @@ care of this for you. It should be included **one time**, at the _root of your c
 hierarchy,_ as shown below:
 
 ```js
-import tw from './lib/tailwind'; // or, if no custom config: `from 'twrnc'`
-import { useDeviceContext } from 'twrnc';
+import tw from './lib/tailwind'; // or, if no custom config: `from '@vesselsoft/twrnc'`
+import { useDeviceContext } from '@vesselsoft/twrnc';
 
 export default function App() {
   useDeviceContext(tw); // <- 👋
@@ -226,7 +226,7 @@ prefer to **explicitly control** the color scheme of your app with some in-app m
 you'll need to configure things slightly differently:
 
 ```js
-import { useDeviceContext, useAppColorScheme } from 'twrnc';
+import { useDeviceContext, useAppColorScheme } from '@vesselsoft/twrnc';
 
 export default function App() {
   // 1️⃣  opt OUT of listening to DEVICE color scheme events
@@ -275,13 +275,13 @@ module.exports = {
 
 To add custom utilities, use the
 [plugin method](https://tailwindcss.com/docs/adding-new-utilities#using-a-plugin)
-described in the tailwind docs, instead of writing to a `.css` file. `twrnc` provides a
+described in the tailwind docs, instead of writing to a `.css` file. `@vesselsoft/twrnc` provides a
 `plugin()` function you can use, but it's also compatible with the stock `tailwindcss`
 function:
 
 ```js
 // tailwind.config.js
-const { plugin } = require('twrnc');
+const { plugin } = require('@vesselsoft/twrnc');
 
 // or, you can use tailwinds plugin function:
 const plugin = require('tailwindcss/plugin');
@@ -324,7 +324,7 @@ module.exports = {
 
 ## Matching Conditional Prefixes
 
-`twrnc` also exposes a `tw.prefixMatch(...prefixes: string[]) => boolean` function that
+`@vesselsoft/twrnc` also exposes a `tw.prefixMatch(...prefixes: string[]) => boolean` function that
 allows you to test whether a given prefix (or combination of prefixes) would produce a
 style given the current device context. This can be useful when you need to pass some
 primitive value to a component, and wish you could leverage `tw`'s knowledge of the
@@ -394,7 +394,7 @@ with the same names will override the ones this library ships with.
 
 ## RN-Only Additions
 
-`twrnc` implements all of the tailwind utilities which overlap with supported RN (native,
+`@vesselsoft/twrnc` implements all of the tailwind utilities which overlap with supported RN (native,
 not web) style props. But it also adds a sprinkling of RN-only utilities which don't map
 to web-css, including:
 
@@ -411,7 +411,7 @@ to web-css, including:
 ## JIT-Style Arbitrary Values
 
 Many of the arbitrary-style utilities made possible by Tailwind JIT are implemented in
-`twrnc`, including:
+`@vesselsoft/twrnc`, including:
 
 - arbitrary colors: `bg-[#f0f]`, `text-[rgb(33,45,55)]`
 - negative values: `-mt-4`, `-tracking-[2px]`
@@ -448,16 +448,16 @@ together.
 
 ## Migrating from V1
 
-**1.** During the rewrite, the package name on npm was changed to `twrnc`. To remove the
+**1.** During the rewrite, the package name on npm was changed to `@vesselsoft/twrnc`. To remove the
 old library and install v2, run:
 
 ```
 npm uninstall tailwind-react-native-classnames
-npm install twrnc
+npm install @vesselsoft/twrnc
 ```
 
 **2.** Grep through your project replacing `from 'tailwind-react-native-classnames'` with
-`from 'twrnc'`.
+`from '@vesselsoft/twrnc'`.
 
 **3.** If you were using a `tailwind.config.js` you can `git rm` your `tw-rn-styles.json`
 file, and switch to passing your config directly to `create` as shown below: (details
